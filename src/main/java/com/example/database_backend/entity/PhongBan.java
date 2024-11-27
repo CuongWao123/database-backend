@@ -1,4 +1,4 @@
-package entity;
+package com.example.database_backend.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,6 +30,6 @@ public class PhongBan {
     private Date ngaythanhlap ;
     @Column(name ="soluongnhanvien")
     private Integer soluongnhanvien ;
-//    @Column(name = "nv_quanly")
-//    private String nv_quanly;
+    @Column(name = "nv_quanly")
+    private String nv_quanly;
 }
