@@ -9,7 +9,7 @@ import com.example.database_backend.repository.PhongBanRepository;
 @RequestMapping
 @RestController
 @AllArgsConstructor
-public class phongbanController {
+public class controller {
 
     private PhongBanRepository phongBanRepository ;
 
