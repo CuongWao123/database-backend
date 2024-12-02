@@ -18,4 +18,14 @@ public interface PhongBanRepository extends JpaRepository<PhongBan,String> {
                                 @Param("p_nv_quanly") String quanly
     );
 
+    @Query(value = "CALL update_tenphongban(:in_mspb , :in_tenphongban)", nativeQuery = true)
+    List<Object[]> sua_phongban(@Param("in_mspb") String in_mspb,
+                                @Param("in_tenphongban") String in_tenphongban
+    );
+
+    @Query(value = "CALL delete_phongban(:in_mspb )", nativeQuery = true)
+    List<Object[]> xoa_phongban(@Param("in_mspb") String in_mspb);
+
+
+
 }
