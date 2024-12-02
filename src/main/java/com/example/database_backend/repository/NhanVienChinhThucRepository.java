@@ -39,4 +39,10 @@ public interface NhanVienChinhThucRepository extends JpaRepository<NhanVienChinh
     @Query(value = "CALL sua_ten_nhanvien( :p_msnv , :p_hoten_moi )", nativeQuery = true)
     List<Object>  sua_ten_nhanvien(@Param("p_msnv") String p_msnv, @Param("p_hoten_moi") String p_hoten_moi);
 
+    @Query(value = "CALL tim_maxluong_withinPhongban_inMonth( :t , :n, :d )", nativeQuery = true)
+    List<Object>  tim_maxluong_withinPhongban_inMonth(@Param("t") Integer t, @Param("n") Integer n , @Param("d") BigDecimal d);
+
+
+
+
 }
