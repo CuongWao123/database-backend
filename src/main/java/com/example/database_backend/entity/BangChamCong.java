@@ -1,9 +1,7 @@
 package com.example.database_backend.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.example.database_backend.entity.CompositeKey.BangChamCongKey;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,21 +13,16 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(
         name = "bangchamcong"
-
 )
 public class BangChamCong {
 
-    @Id
-    @Column(name = "msnv")
-    private String msnv;
+    @EmbeddedId
+    private BangChamCongKey bangChamCongKey;
 
-    @Id
-    @Column(name = "thang")
-    private int thang;
-
-    @Id
-    @Column(name = "nam")
-    private int nam;
+    @ManyToOne
+    @MapsId("msnv")
+    @JoinColumn(name = "msnv")
+    private NhanVien nhanVien;
 
     @Column(name = "sogiohientai")
     private int sogioHienTai;
