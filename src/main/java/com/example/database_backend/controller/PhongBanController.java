@@ -15,6 +15,8 @@ public class PhongBanController {
     private PhongBanRepository phongBanRepository;
 
 
+
+
     public static String extractErrorMessage(String exceptionMessage) {
         try {
             int start = exceptionMessage.indexOf("[", exceptionMessage.indexOf("[") + 1);
@@ -27,6 +29,12 @@ public class PhongBanController {
         }
         return "Unknown Error";
     }
+
+    @GetMapping("/timphongban")
+    public ResponseEntity<?> findPhongban( @RequestParam String mspb){
+        return new ResponseEntity<>(phongBanRepository.findById(mspb) , HttpStatus.OK);
+    }
+
     @GetMapping("/getAllPhongban")
     private ResponseEntity<?> getAllphongban (){
         return new ResponseEntity<>(phongBanRepository.findAll(), HttpStatus.OK);
