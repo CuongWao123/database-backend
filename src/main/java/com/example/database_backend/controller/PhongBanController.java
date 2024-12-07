@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/phongban")
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 public class PhongBanController {
 
     private PhongBanRepository phongBanRepository;

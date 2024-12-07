@@ -1,4 +1,4 @@
-package com.example.database_backend;
+package com.example.database_backend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

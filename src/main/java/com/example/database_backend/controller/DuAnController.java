@@ -16,6 +16,7 @@ import java.sql.Date;
 @RequestMapping("/duan")
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 public class DuAnController {
     private DuAnRepository duAnRepository;
     public static String extractErrorMessage(String exceptionMessage) {

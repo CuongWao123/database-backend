@@ -19,6 +19,7 @@ import java.util.List;
 @RequestMapping("/NVCT")
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 public class NhanVienChinhThucController {
 
     private NhanVienChinhThucRepository nhanVienChinhThucRepository;
