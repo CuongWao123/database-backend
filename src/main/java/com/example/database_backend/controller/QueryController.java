@@ -2,10 +2,8 @@ package com.example.database_backend.controller;
 
 import com.example.database_backend.entity.CompositeKey.NgayLamViecKey;
 import com.example.database_backend.entity.NgayLamViec;
-import com.example.database_backend.repository.NgayLamViecRepository;
-import com.example.database_backend.repository.NhanVienChinhThucRepository;
-import com.example.database_backend.repository.NhanVienRepository;
-import com.example.database_backend.repository.NhanVienThuVIecRepository;
+import com.example.database_backend.repository.*;
+import com.example.database_backend.response.SumLamThemResponse;
 import com.fasterxml.jackson.databind.annotation.NoClass;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,10 +24,16 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class QueryController {
 
-    public NhanVienChinhThucRepository nhanVienChinhThucRepository ;
-public NgayLamViecRepository ngayLamViecRepository;
-public NhanVienRepository nhanVienRepository;
-public NhanVienThuVIecRepository nhanVienThuVIecRepository;
+    public final NhanVienChinhThucRepository nhanVienChinhThucRepository ;
+
+    public final NgayLamViecRepository ngayLamViecRepository;
+
+    public final NhanVienRepository nhanVienRepository;
+
+    public final NhanVienThuVIecRepository nhanVienThuVIecRepository;
+
+    private final BangChamCongRepository bangChamCongRepository;
+
     @GetMapping("/manhcuong1")
     public ResponseEntity<?> tim_maxluong_withinPhongban_inMonth (@RequestParam Integer t , @RequestParam Integer n , @RequestParam BigDecimal d){
         return  new ResponseEntity<>(nhanVienChinhThucRepository.tim_maxluong_withinPhongban_inMonth(t,n,d) , HttpStatus.OK) ;
@@ -50,12 +54,29 @@ public NhanVienThuVIecRepository nhanVienThuVIecRepository;
             String aa=a[2].toString().substring(0,4);
             NgayLamViecKey tempkey=new NgayLamViecKey((String)a[0],(Integer) a[3],(Integer)a[1],Integer.parseInt(aa));
             NgayLamViec tmp= new NgayLamViec(tempkey,nhanVienRepository.findById(msnv).get(),(String) a[4],(Timestamp) a[5],(Timestamp) a[6]);
-        temp.add(tmp);}
+            temp.add(tmp);
+        }
         return  new ResponseEntity<>(temp , HttpStatus.OK) ;
     }
     @GetMapping("/thuviec")
     public ResponseEntity<?> allthuviec(){
         return  new ResponseEntity<>(nhanVienThuVIecRepository.findAll() , HttpStatus.OK) ;
+    }
+
+    @GetMapping("/phuong1")
+    public ResponseEntity<?> SumLamThem(
+            @RequestParam Integer year
+    ){
+        List<Object[]> sumList = bangChamCongRepository.sumLamThem(year);
+        List<SumLamThemResponse> list = new ArrayList<>();
+        for (Object[] objects: sumList) {
+            list.add(SumLamThemResponse.builder()
+                            .month((Integer) objects[0])
+                            .tong_luong_lam_them((BigDecimal) objects[1])
+                            .tong_gio_lam_them((BigDecimal) objects[2])
+                    .build());
+        }
+        return new ResponseEntity<>(list,HttpStatus.OK);
     }
 
 }
