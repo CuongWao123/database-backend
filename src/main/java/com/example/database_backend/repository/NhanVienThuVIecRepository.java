@@ -26,7 +26,7 @@ public interface NhanVienThuVIecRepository extends JpaRepository<NhanVienThuViec
             @Param("lcb") BigDecimal lcb ,
             @Param("sogiotoithieu") Integer sotgio
     );
-    @Query(value = "CALL thuviec_thanh_chinhthuc(    :nv,:bhxh ,:luong ,:toithieu , :hanthuviec )", nativeQuery = true)
+    @Query(value = "CALL thuviec_thanh_chinhthuc( :nv,:bhxh ,:luong ,:toithieu , :hanthuviec )", nativeQuery = true)
     List<Object> thuviec_thanh_chinhthuc(
             @Param("nv") String nv ,
             @Param("bhxh") String bhxh ,
@@ -35,4 +35,16 @@ public interface NhanVienThuVIecRepository extends JpaRepository<NhanVienThuViec
             @Param("hanthuviec") Date han
 
     );
+    @Query(value = "CALL chuyen_viec( :nv,:luong ,:chuc , :pban,:loai,:toithieu,:sta)", nativeQuery = true)
+    List<Object> chuyenviec(
+            @Param("nv") String nv ,
+            @Param("luong") BigDecimal luong ,
+            @Param("chuc") String chucvu ,
+            @Param("pban") String phong,
+            @Param("loai") String loainv,
+            @Param("toithieu") Integer sotgio,
+            @Param("sta") Date han
+
+    );
+
 }

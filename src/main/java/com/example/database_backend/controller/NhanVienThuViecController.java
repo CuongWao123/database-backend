@@ -51,14 +51,34 @@ public class NhanVienThuViecController {
             }
             return new ResponseEntity<>("them thanh cong",HttpStatus.OK);
         }
-    @PostMapping("/lenchinhthuc")
-    public ResponseEntity<?> hetthuviec (@RequestParam("nv") String msnv,
-                                     @RequestParam("bhxh") String bhxh,
-                                     @RequestParam("luong") BigDecimal lcb,
+    @PostMapping("/chuyenviec")
+    public ResponseEntity<?> chuyenviec (@RequestParam("nv") String msnv,
+                                         @RequestParam("luong") BigDecimal lcb,
+                                     @RequestParam("chuc") String chucvu,
+                                         @RequestParam("pban") String phong,
+                                     @RequestParam("loai") String loai,
                                      @RequestParam("toithieu") Integer sogiotoithieu,
-                                     @RequestParam("hanthuviec") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate han
+                                     @RequestParam("sta") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate han
 
                                      )
+            throws SQLException {
+        Date han1 = Date.valueOf(han);
+
+        try {
+            nhanVienThuVIecRepository.chuyenviec(msnv,lcb,chucvu,phong,loai,sogiotoithieu,han1);
+        } catch (Exception e) {
+            return new ResponseEntity<>(extractErrorMessage(e.getMessage()),HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("thao tac thanh cong",HttpStatus.OK);
+    }
+    @PostMapping("/lenchinhthuc")
+    public ResponseEntity<?> hetthuviec (@RequestParam("nv") String msnv,
+                                         @RequestParam("bhxh") String bhxh,
+                                         @RequestParam("luong") BigDecimal lcb,
+                                         @RequestParam("toithieu") Integer sogiotoithieu,
+                                         @RequestParam("hanthuviec") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate han
+
+    )
             throws SQLException {
         Date han1 = Date.valueOf(han);
 
