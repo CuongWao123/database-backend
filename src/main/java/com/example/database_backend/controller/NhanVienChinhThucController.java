@@ -1,9 +1,9 @@
 package com.example.database_backend.controller;
 
 import com.example.database_backend.entity.NhanVien;
-import com.example.database_backend.repository.NhanVienChinhThucRepository;
-import com.example.database_backend.repository.NhanVienRepository;
+import com.example.database_backend.repository.*;
 import lombok.AllArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +24,9 @@ public class NhanVienChinhThucController {
 
     private NhanVienChinhThucRepository nhanVienChinhThucRepository;
     private NhanVienRepository nhanVienRepository ;
+    private DiaChiRepository diaChiRepository;
+    private SDTRepository sdtRepository;
+    private EmailRepository emailRepository;
     public static String extractErrorMessage(String exceptionMessage) {
         try {
             int start = exceptionMessage.indexOf("[", exceptionMessage.indexOf("[") + 1);
@@ -77,6 +80,112 @@ public class NhanVienChinhThucController {
     public String delete_nvchinhthuc (@RequestParam("msnv") String msnv){
         try {
             nhanVienChinhThucRepository.delete_nhanvien_chinhthuc(msnv);
+        } catch (Exception e) {
+            return  extractErrorMessage(e.getMessage());
+        }
+        return "Xoa thanh cong" ;
+    }
+    @PostMapping ("/themdiachi")
+    public String insertdiachi (@RequestParam ("p_msnv") String msnv ,
+                                @RequestParam("p_sonha") String sonha ,
+                                @RequestParam("p_tenduong") String duong ,
+                                @RequestParam("p_phuong") String phuong ,
+                                @RequestParam("p_tinhthanhpho") String tinh ){
+        try {
+            diaChiRepository.insert_into_diachi(msnv, sonha, duong, phuong, tinh);
+        } catch (Exception e) {
+            return  extractErrorMessage(e.getMessage());
+        }
+        return "Them thanh cong" ;
+    }
+    @PutMapping ("/doidiachi")
+    public String updatediachi (@RequestParam("p_msnv") String msnv ,
+                                @RequestParam("p_old_sonha") String sonhacu ,
+                                @RequestParam("p_old_tenduong") String duongcu ,
+                                @RequestParam("p_old_phuong") String phuongcu ,
+                                @RequestParam("p_old_tinhthanhpho") String tinhcu,
+                                @RequestParam("p_new_sonha") String sonhamoi ,
+                                @RequestParam("p_new_tenduong") String duongmoi ,
+                                @RequestParam("p_new_phuong") String phuongmoi ,
+                                @RequestParam("p_new_tinhthanhpho") String tinhmoi ){
+        try {
+            diaChiRepository.update_diachi(msnv, sonhacu, duongcu, phuongcu, tinhcu,
+                    sonhamoi, duongmoi, phuongmoi, tinhmoi);
+        } catch (Exception e) {
+            return  extractErrorMessage(e.getMessage());
+        }
+        return "Cap nhat thanh cong" ;
+    }
+    @DeleteMapping ("/xoadiachi")
+    public String deletediachi (@RequestParam ("p_msnv") String msnv ,
+                                @RequestParam("p_sonha") String sonha ,
+                                @RequestParam("p_tenduong") String duong ,
+                                @RequestParam("p_phuong") String phuong ,
+                                @RequestParam("p_tinhthanhpho") String tinh ){
+        try {
+            diaChiRepository.delete_diachi(msnv, sonha, duong, phuong, tinh);
+        } catch (Exception e) {
+            return  extractErrorMessage(e.getMessage());
+        }
+        return "Xoa thanh cong" ;
+    }
+    @PostMapping ("/themsdt")
+    public String insertsdt (@RequestParam ("p_msnv") String msnv ,
+                                @RequestParam("p_sdt") String sdt ){
+        try {sdtRepository.insert_into_sdt(msnv, sdt);
+
+        } catch (Exception e) {
+            return  extractErrorMessage(e.getMessage());
+        }
+        return "Them thanh cong" ;
+    }
+    @PutMapping ("/suasdt")
+    public String updatesdt (@RequestParam ("p_msnv") String msnv ,
+                             @RequestParam("p_old_sdt") String sdtcu,
+                             @RequestParam("p_new_sdt") String sdtmoi){
+        try {sdtRepository.update_sdt(msnv, sdtcu,sdtmoi);
+
+        } catch (Exception e) {
+            return  extractErrorMessage(e.getMessage());
+        }
+        return "Cap nhat thanh cong" ;
+    }
+    @DeleteMapping ("/xoasdt")
+    public String deletesdt (@RequestParam ("p_msnv") String msnv ,
+                             @RequestParam("p_sdt") String sdt ){
+        try {sdtRepository.delete_sdt(msnv, sdt);
+
+        } catch (Exception e) {
+            return  extractErrorMessage(e.getMessage());
+        }
+        return "Xoa thanh cong" ;
+    }
+    @PostMapping ("/thememail")
+    public String insertemail (@RequestParam ("p_msnv") String msnv ,
+                               @RequestParam("p_email") String mail ){
+        try {emailRepository.insert_into_email(msnv,mail);
+
+        } catch (Exception e) {
+            return  extractErrorMessage(e.getMessage());
+        }
+        return "Them thanh cong" ;
+    }
+    @PutMapping ("/suaemail")
+    public String updateemail (@RequestParam ("p_msnv") String msnv ,
+                               @RequestParam("p_old_email") String mailcu,
+                               @RequestParam("p_new_email") String mailmoi){
+        try {emailRepository.update_email(msnv,mailcu,mailmoi);
+
+        } catch (Exception e) {
+            return  extractErrorMessage(e.getMessage());
+        }
+        return "Cap nhat thanh cong" ;
+    }
+    @DeleteMapping ("/xoaemail")
+    public String deleteemail (@RequestParam ("p_msnv") String msnv ,
+                               @RequestParam("p_email") String mail ){
+        try {emailRepository.delete_email(msnv,mail);
+
         } catch (Exception e) {
             return  extractErrorMessage(e.getMessage());
         }
