@@ -16,7 +16,7 @@ public class BangChamCongResponse {
     private String mspb;
     private Integer thang;
     private Integer nam;
-    private int sogioHienTai;
-    private int sogioToiThieu;
-    private int sogioLamThem;
+    private String sogioHienTai;
+    private String sogioToiThieu;
+    private String sogioLamThem;
 }

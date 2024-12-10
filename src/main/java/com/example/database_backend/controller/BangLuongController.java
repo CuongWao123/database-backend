@@ -8,13 +8,11 @@ import com.example.database_backend.repository.BangLuongRepository;
 import com.example.database_backend.repository.NhanVienRepository;
 import com.example.database_backend.response.BangChamCongResponse;
 import com.example.database_backend.response.BangLuongResponse;
+import com.example.database_backend.utils.SecondToHour;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +20,8 @@ import java.util.List;
 @RestController
 @RequestMapping("")
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
+
 public class BangLuongController {
 
     private final BangLuongRepository bangLuongRepository;
@@ -80,9 +80,9 @@ public class BangLuongController {
                     .mspb(nhanVien.getMspb())
                     .thang(bcc.getBangChamCongKey().getThang())
                     .nam(bcc.getBangChamCongKey().getNam())
-                    .sogioHienTai(bcc.getSogioHienTai())
-                    .sogioToiThieu(bcc.getSogioToiThieu())
-                    .sogioLamThem(bcc.getSogioLamThem())
+                    .sogioHienTai(SecondToHour.convertSecondsToTime(bcc.getSogioHienTai()))
+                    .sogioToiThieu(SecondToHour.convertSecondsToTime(bcc.getSogioToiThieu()))
+                    .sogioLamThem(SecondToHour.convertSecondsToTime(bcc.getSogioLamThem()))
                     .build();
             responses.add(temp);
         }
