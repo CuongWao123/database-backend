@@ -11,4 +11,6 @@ public interface BangLuongRepository extends JpaRepository<BangLuong, BangLuongK
 
 
     List<BangLuong> findBangLuongsByBangLuongKey_ThangAndBangLuongKey_Nam(Integer thang,Integer nam);
+
+    List<BangLuong> findAllByBangLuongKey_Msnv(String msnv);
 }

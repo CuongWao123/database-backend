@@ -17,4 +17,6 @@ public interface BangChamCongRepository extends JpaRepository<BangChamCong, Bang
     BangChamCong findBangChamCongByBangChamCongKey_MsnvAndBangChamCongKey_ThangAndBangChamCongKey_Nam(String nv,Integer thang,Integer nam);
     List<BangChamCong>findBangChamCongByBangChamCongKey_ThangAndBangChamCongKey_Nam(Integer thang,Integer nam);
 
+    List<BangChamCong> findAllByBangChamCongKey_Msnv(String msnv);
+
 }
