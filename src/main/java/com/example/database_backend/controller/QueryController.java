@@ -1,6 +1,8 @@
 package com.example.database_backend.controller;
 
+import com.example.database_backend.entity.CompositeKey.LichSuCVKey;
 import com.example.database_backend.entity.CompositeKey.NgayLamViecKey;
+import com.example.database_backend.entity.LichSuCongViec;
 import com.example.database_backend.entity.NgayLamViec;
 import com.example.database_backend.repository.*;
 import com.example.database_backend.response.SumLamThemResponse;
@@ -33,6 +35,7 @@ public class QueryController {
     public final NhanVienThuVIecRepository nhanVienThuVIecRepository;
 
     private final BangChamCongRepository bangChamCongRepository;
+    private final LSCVRepository lscvRepository;
 
     @GetMapping("/manhcuong1")
     public ResponseEntity<?> tim_maxluong_withinPhongban_inMonth (@RequestParam Integer t , @RequestParam Integer n , @RequestParam BigDecimal d){
@@ -54,6 +57,19 @@ public class QueryController {
             String aa=a[2].toString().substring(0,4);
             NgayLamViecKey tempkey=new NgayLamViecKey((String)a[0],(Integer) a[3],(Integer)a[1],Integer.parseInt(aa));
             NgayLamViec tmp= new NgayLamViec(tempkey,nhanVienRepository.findById(msnv).get(),(String) a[4],(Timestamp) a[5],(Timestamp) a[6]);
+            temp.add(tmp);
+        }
+        return  new ResponseEntity<>(temp , HttpStatus.OK) ;
+    }
+    @GetMapping("/viet3")
+    public ResponseEntity<?> lichsu (
+                                       @RequestParam("nv") String msnv){
+        List <Object[]> lichsu=lscvRepository.xemlichsu(msnv);
+        List<LichSuCongViec> temp=new ArrayList<>();
+        for(Object[] a:lichsu) {
+
+            LichSuCVKey tempkey=new LichSuCVKey((String)a[0],(Integer) a[1]);
+            LichSuCongViec tmp= new LichSuCongViec(tempkey,nhanVienRepository.findById(msnv).get(),(Date) a[2],(String) a[3],(String) a[4],(BigDecimal)a[5],(String) a[6]);
             temp.add(tmp);
         }
         return  new ResponseEntity<>(temp , HttpStatus.OK) ;
