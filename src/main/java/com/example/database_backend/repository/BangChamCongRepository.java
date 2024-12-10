@@ -14,5 +14,7 @@ import java.util.List;
 public interface BangChamCongRepository extends JpaRepository<BangChamCong, BangChamCongKey> {
     @Query(value = "CALL SUM_lam_them(:year)", nativeQuery = true)
     List<Object[]> sumLamThem(@Param("year") Integer year);
+    BangChamCong findBangChamCongByBangChamCongKey_MsnvAndBangChamCongKey_ThangAndBangChamCongKey_Nam(String nv,Integer thang,Integer nam);
+    List<BangChamCong>findBangChamCongByBangChamCongKey_ThangAndBangChamCongKey_Nam(Integer thang,Integer nam);
 
 }
