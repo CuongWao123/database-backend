@@ -17,4 +17,8 @@ public interface NgayLamViecRepository extends JpaRepository<NgayLamViec, NgayLa
                             @Param("cuoi") Date cuoi,
                             @Param("nv") String nv
                              );
+    @Query(value= "select tinhgio(:batdau,:ketthuc,:nv)",nativeQuery = true)
+    List<Object[]> tinhgio(@Param("batdau") Date dau,
+                           @Param("ketthuc") Date cuoi,
+                           @Param("nv") String nv);
 }

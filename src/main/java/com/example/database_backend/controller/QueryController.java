@@ -61,6 +61,16 @@ public class QueryController {
         }
         return  new ResponseEntity<>(temp , HttpStatus.OK) ;
     }
+    @GetMapping("/viet22")
+    public ResponseEntity<?> tinhgio (@RequestParam("batdau") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate ngaydau,
+                                       @RequestParam("ketthuc") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate ngaycuoi,
+                                       @RequestParam("nv") String msnv){
+        Date jdau = Date.valueOf(ngaydau);
+        Date jcuoi = Date.valueOf(ngaycuoi);
+        List <Object[]> listngay=ngayLamViecRepository.tinhgio(jdau,jcuoi,msnv);
+        Integer temp =(Integer) listngay.get(0)[0];
+        return  new ResponseEntity<>(temp , HttpStatus.OK) ;
+    }
     @GetMapping("/viet3")
     public ResponseEntity<?> lichsu (
                                        @RequestParam("nv") String msnv){
