@@ -19,4 +19,8 @@ public interface EmailRepository extends JpaRepository<Email, EmailKey> {
     @Query(value= "CALL delete_nvemail( :p_msnv,:p_email)", nativeQuery = true)
     List<Object[]> delete_email(@Param("p_msnv") String msnv ,
                                      @Param("p_email") String mail );
+
+    @Query(value = "SELECT * FROM nvemail WHERE msnv = :msnv",nativeQuery = true)
+    List<Object[]> get_all_email(@Param("msnv") String msnv);
+
 }

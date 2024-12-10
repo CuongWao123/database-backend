@@ -19,4 +19,7 @@ public interface SDTRepository extends JpaRepository<SDT, SDTKey> {
     @Query(value= "CALL delete_nvsdt( :p_msnv,:p_sdt)", nativeQuery = true)
     List<Object[]> delete_sdt(@Param("p_msnv") String msnv ,
                                    @Param("p_sdt") String sdt );
+
+    @Query(value = "SELECT * FROM nvsdt WHERE msnv = :msnv",nativeQuery = true)
+    List<Object[]> get_all_sdt(@Param("msnv") String msnv);
 }

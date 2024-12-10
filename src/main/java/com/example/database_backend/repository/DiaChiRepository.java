@@ -33,4 +33,6 @@ public interface DiaChiRepository extends JpaRepository<DiaChi, DiaChiKey> {
                                       @Param("p_phuong") String phuong ,
                                       @Param("p_tinhthanhpho") String tinh );
 
+    @Query(value = "SELECT * FROM nvdiachi WHERE msnv = :msnv",nativeQuery = true)
+    List<Object[]> get_all_diachi(@Param("msnv") String msnv);
 }
