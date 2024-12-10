@@ -8,6 +8,7 @@ import com.example.database_backend.repository.*;
 import com.example.database_backend.response.SumLamThemResponse;
 import com.fasterxml.jackson.databind.annotation.NoClass;
 import lombok.AllArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -103,6 +104,11 @@ public class QueryController {
                     .build());
         }
         return new ResponseEntity<>(list,HttpStatus.OK);
+    }
+
+    @GetMapping("/caculate_salary_to_pay")
+    public ResponseEntity<?> caculate_salary_to_pay (@RequestParam int t, @RequestParam int n){
+        return new ResponseEntity<>(nhanVienChinhThucRepository.caculate_salary_to_pay(n,t),HttpStatus.OK);
     }
 
 }

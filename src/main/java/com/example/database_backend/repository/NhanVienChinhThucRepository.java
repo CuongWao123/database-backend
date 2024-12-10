@@ -42,7 +42,8 @@ public interface NhanVienChinhThucRepository extends JpaRepository<NhanVienChinh
     @Query(value = "CALL tim_maxluong_withinPhongban_inMonth( :t , :n, :d )", nativeQuery = true)
     List<Object>  tim_maxluong_withinPhongban_inMonth(@Param("t") Integer t, @Param("n") Integer n , @Param("d") BigDecimal d);
 
-
+    @Query(value = "select caculate_salary_to_pay ( :t , :n)", nativeQuery = true)
+    List<Object>  caculate_salary_to_pay(@Param("t") Integer t, @Param("n") Integer n);
 
 
 }
