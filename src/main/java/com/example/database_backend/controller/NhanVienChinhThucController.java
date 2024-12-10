@@ -2,6 +2,8 @@ package com.example.database_backend.controller;
 
 import com.example.database_backend.entity.NhanVien;
 import com.example.database_backend.repository.*;
+import com.example.database_backend.response.DiaChiResponse;
+import com.example.database_backend.response.SumLamThemResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,6 +16,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/NVCT")
@@ -202,4 +205,44 @@ public class NhanVienChinhThucController {
         return "Sua thanh cong" ;
     }
 
+    @GetMapping("/all/email")
+    public List<String> getAllEmail(
+            @RequestParam("msnv") String msnv
+    ){
+        List<Object[]> res = emailRepository.get_all_email(msnv);
+        List<String> email = new ArrayList<>();
+        for (Object[] objects: res) {
+            email.add((String) objects[1]);
+        }
+        return email;
+    }
+
+    @GetMapping("/all/diachi")
+    public List<?> getAllDiaChi(
+            @RequestParam("msnv") String msnv
+    ){
+        List<Object[]> res = diaChiRepository.get_all_diachi(msnv);
+        List<DiaChiResponse> diachi = new ArrayList<>();
+        for (Object[] objects: res) {
+            diachi.add(DiaChiResponse.builder()
+                            .sonha((String) objects[1])
+                            .tenduong((String) objects[2])
+                            .phuong((String) objects[3])
+                            .tinhthanhpho((String) objects[4])
+                    .build());
+        }
+        return diachi;
+    }
+
+    @GetMapping("/all/sdt")
+    public List<String> getAllSdt(
+            @RequestParam("msnv") String msnv
+    ){
+        List<Object[]> res = sdtRepository.get_all_sdt(msnv);
+        List<String> sdt = new ArrayList<>();
+        for (Object[] objects: res) {
+            sdt.add((String) objects[1]);
+        }
+        return sdt;
+    }
 }
