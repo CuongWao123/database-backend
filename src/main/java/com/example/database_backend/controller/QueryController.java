@@ -21,6 +21,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.database_backend.utils.SecondToHour.convertSecondsToTime;
+
 @RequestMapping("/query")
 @RestController
 @AllArgsConstructor
@@ -69,7 +71,8 @@ public class QueryController {
         Date jdau = Date.valueOf(ngaydau);
         Date jcuoi = Date.valueOf(ngaycuoi);
         List <Object[]> listngay=ngayLamViecRepository.tinhgio(jdau,jcuoi,msnv);
-        Integer temp =(Integer) listngay.get(0)[0];
+        Integer tmp =(Integer) listngay.get(0)[0];
+        String temp=convertSecondsToTime(tmp);
         return  new ResponseEntity<>(temp , HttpStatus.OK) ;
     }
     @GetMapping("/viet3")
@@ -97,10 +100,11 @@ public class QueryController {
         List<Object[]> sumList = bangChamCongRepository.sumLamThem(year);
         List<SumLamThemResponse> list = new ArrayList<>();
         for (Object[] objects: sumList) {
+            BigDecimal a = (BigDecimal) objects[2];
             list.add(SumLamThemResponse.builder()
                             .month((Integer) objects[0])
                             .tong_luong_lam_them((BigDecimal) objects[1])
-                            .tong_gio_lam_them((BigDecimal) objects[2])
+                            .tong_gio_lam_them(convertSecondsToTime(a.longValue()))
                     .build());
         }
         return new ResponseEntity<>(list,HttpStatus.OK);

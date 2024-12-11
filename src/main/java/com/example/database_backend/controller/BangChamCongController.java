@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.example.database_backend.utils.SecondToHour.convertSecondsToTime;
+
 @RequestMapping("/bangchamcong-bangluong")
 @RestController
 @AllArgsConstructor
@@ -60,6 +62,7 @@ public class BangChamCongController {
                                         @RequestParam("nam")Integer nam){
 //        return new ResponseEntity<>(
 //                bangChamCongRepository.findBangChamCongByBangChamCongKey_MsnvAndBangChamCongKey_ThangAndBangChamCongKey_Nam(msnv, thang, nam), HttpStatus.OK);
+
         return ResponseEntity.ok(
                 bccHour.fromBBC(bangChamCongRepository
                         .findBangChamCongByBangChamCongKey_MsnvAndBangChamCongKey_ThangAndBangChamCongKey_Nam(msnv, thang, nam)

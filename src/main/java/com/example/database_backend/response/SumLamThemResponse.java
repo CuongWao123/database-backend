@@ -12,5 +12,5 @@ import java.math.BigDecimal;
 public class SumLamThemResponse {
     private Integer month;
     private BigDecimal tong_luong_lam_them;
-    private BigDecimal tong_gio_lam_them;
+    private String tong_gio_lam_them;
 }
