@@ -5,6 +5,8 @@ import com.example.database_backend.entity.CompositeKey.NgayLamViecKey;
 import com.example.database_backend.entity.LichSuCongViec;
 import com.example.database_backend.entity.NgayLamViec;
 import com.example.database_backend.repository.*;
+import com.example.database_backend.response.ChiTietKHTResponse;
+import com.example.database_backend.response.KHoanThanhResponse;
 import com.example.database_backend.response.SumLamThemResponse;
 import com.fasterxml.jackson.databind.annotation.NoClass;
 import lombok.AllArgsConstructor;
@@ -87,6 +89,28 @@ public class QueryController {
             temp.add(tmp);
         }
         return  new ResponseEntity<>(temp , HttpStatus.OK) ;
+    }
+    @GetMapping("/kohoanthanh")
+    public ResponseEntity<?> kht(@RequestParam("namm")Integer year,
+                                 @RequestParam("solan")Integer solan){
+        List<KHoanThanhResponse> temp= new ArrayList<>();
+        List<Object[]> a =bangChamCongRepository.khoanthanh(year, solan);
+        for(Object[] aa:a){
+            KHoanThanhResponse tmp = new KHoanThanhResponse((String)aa[0],(String)aa[1],convertSecondsToTime(((BigDecimal)aa[2]).longValue()),(Long)aa[3]);
+            temp.add(tmp);
+        }
+        return  new ResponseEntity<>(temp, HttpStatus.OK) ;
+    }
+    @GetMapping("/chitietkht")
+    public ResponseEntity<?> chitietkht(@RequestParam("input_year")Integer year,
+                                 @RequestParam("solan")Integer solan){
+        List<ChiTietKHTResponse> temp= new ArrayList<>();
+        List<Object[]> a =bangChamCongRepository.chitiet_k_hoanthanh(year, solan);
+        for(Object[] aa:a){
+            ChiTietKHTResponse tmp = new ChiTietKHTResponse((String)aa[0],(Integer) aa[1],convertSecondsToTime(((Integer)aa[2]).longValue()),convertSecondsToTime(((Integer)aa[3]).longValue()));
+            temp.add(tmp);
+        }
+        return  new ResponseEntity<>(temp, HttpStatus.OK) ;
     }
     @GetMapping("/thuviec")
     public ResponseEntity<?> allthuviec(){

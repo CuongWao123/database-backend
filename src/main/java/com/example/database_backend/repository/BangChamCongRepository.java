@@ -18,5 +18,11 @@ public interface BangChamCongRepository extends JpaRepository<BangChamCong, Bang
     List<BangChamCong>findBangChamCongByBangChamCongKey_ThangAndBangChamCongKey_Nam(Integer thang,Integer nam);
 
     List<BangChamCong> findAllByBangChamCongKey_Msnv(String msnv);
+    @Query(value = "CALL k_hoanthanh_tren_nhieu_lan(:namm, :solan)", nativeQuery = true)
+    List<Object[]> khoanthanh(@Param("namm") Integer year,
+                              @Param("solan")Integer solan);
 
+    @Query(value = "CALL nv_khong_dat_chi_tieu(:input_year, :solan)", nativeQuery = true)
+    List<Object[]> chitiet_k_hoanthanh(@Param("input_year") Integer year,
+                              @Param("solan")Integer solan);
 }
