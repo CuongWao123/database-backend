@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,5 +88,22 @@ public class BangLuongController {
             responses.add(temp);
         }
         return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    @GetMapping("/tinh_luong")
+    public String tinhluong(
+            @RequestParam String msnv,
+            @RequestParam Integer thang,
+            @RequestParam Integer nam,
+            @RequestParam BigDecimal xangxe,
+            @RequestParam BigDecimal antrua,
+            @RequestParam BigDecimal hotrokhac
+    ){
+        try {
+            bangLuongRepository.tinh_luong(msnv,thang,nam,xangxe,antrua,hotrokhac);
+            return "Tinh luong thanh cong";
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
